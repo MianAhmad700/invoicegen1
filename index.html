@@ -8,27 +8,21 @@
 </head>
 <body>
     <div class="app-container">
-        <!-- Mobile Menu Toggle -->
-        <button id="mobile-menu-toggle" class="mobile-menu-btn" aria-label="Toggle Menu">
-            ☰
-        </button>
-        
-        <!-- Sidebar Overlay -->
-        <div id="sidebar-overlay" class="sidebar-overlay"></div>
-
-        <aside class="sidebar" id="sidebar">
-            <div class="sidebar-header">
+        <header class="navbar">
+            <div class="navbar-brand">
                 <h1>RiphahEvents</h1>
-                <button id="close-sidebar" class="close-btn" aria-label="Close Menu">&times;</button>
             </div>
-            <nav>
+            <button id="mobile-menu-toggle" class="mobile-menu-btn" aria-label="Toggle Menu">
+                ☰
+            </button>
+            <nav class="navbar-nav" id="navbar-nav">
                 <button class="nav-btn active" data-target="dashboard">Dashboard</button>
                 <button class="nav-btn" data-target="students">Students</button>
                 <button class="nav-btn" data-target="events">Events</button>
                 <button class="nav-btn" data-target="registrations">Registrations</button>
                 <button class="nav-btn" data-target="invoices">Invoices</button>
             </nav>
-        </aside>
+        </header>
         
         <main class="main-content">
             <!-- Dashboard Section -->

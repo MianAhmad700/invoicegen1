@@ -12,38 +12,35 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Mobile Menu Logic
     const mobileMenuBtn = document.getElementById("mobile-menu-toggle");
-    const sidebar = document.getElementById("sidebar");
-    const closeSidebarBtn = document.getElementById("close-sidebar");
-    const sidebarOverlay = document.getElementById("sidebar-overlay");
+    const navbarNav = document.getElementById("navbar-nav");
 
-    function toggleSidebar(show) {
-        if (sidebar) {
+    function toggleNavbar(show) {
+        if (navbarNav) {
             if (show) {
-                sidebar.classList.add("show");
-                if (sidebarOverlay) sidebarOverlay.classList.add("show");
+                navbarNav.classList.add("show");
             } else {
-                sidebar.classList.remove("show");
-                if (sidebarOverlay) sidebarOverlay.classList.remove("show");
+                navbarNav.classList.remove("show");
             }
         }
     }
 
     if (mobileMenuBtn) {
         mobileMenuBtn.addEventListener("click", (e) => {
-            e.stopPropagation(); // Prevent document click from closing immediately
-            const isShown = sidebar.classList.contains("show");
-            toggleSidebar(!isShown);
+            e.stopPropagation();
+            const isShown = navbarNav.classList.contains("show");
+            toggleNavbar(!isShown);
         });
     }
 
-    if (closeSidebarBtn) {
-        closeSidebarBtn.addEventListener("click", () => toggleSidebar(false));
-    }
-
-    // Close sidebar when clicking overlay
-    if (sidebarOverlay) {
-        sidebarOverlay.addEventListener("click", () => toggleSidebar(false));
-    }
+    // Close menu when clicking outside
+    document.addEventListener("click", (e) => {
+        if (window.innerWidth <= 768 && 
+            navbarNav && navbarNav.classList.contains("show") && 
+            !navbarNav.contains(e.target) && 
+            e.target !== mobileMenuBtn) {
+            toggleNavbar(false);
+        }
+    });
 
     // Navigation Logic
     const navButtons = document.querySelectorAll(".nav-btn");
@@ -57,9 +54,9 @@ document.addEventListener("DOMContentLoaded", () => {
             navButtons.forEach(b => b.classList.remove("active"));
             btn.classList.add("active");
 
-            // Close Sidebar on Mobile Selection
+            // Close Navbar on Mobile Selection
             if (window.innerWidth <= 768) {
-                toggleSidebar(false);
+                toggleNavbar(false);
             }
 
             // Show Target Section
