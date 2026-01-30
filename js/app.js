@@ -31,7 +31,8 @@ document.addEventListener("DOMContentLoaded", () => {
     if (mobileMenuBtn) {
         mobileMenuBtn.addEventListener("click", (e) => {
             e.stopPropagation(); // Prevent document click from closing immediately
-            toggleSidebar(true);
+            const isShown = sidebar.classList.contains("show");
+            toggleSidebar(!isShown);
         });
     }
 

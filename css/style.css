@@ -45,15 +45,17 @@ body {
 
 .sidebar-header {
     display: flex;
-    justify-content: space-between;
+    justify-content: center; /* Center by default (desktop) */
     align-items: center;
     margin-bottom: 2rem;
+    position: relative;
+    width: 100%;
 }
 
 .sidebar h1 {
-    text-align: center;
     font-size: 1.5rem;
     margin: 0;
+    white-space: nowrap;
 }
 
 .close-btn {
@@ -61,8 +63,13 @@ body {
     background: none;
     border: none;
     color: white;
-    font-size: 1.5rem;
+    font-size: 2rem;
     cursor: pointer;
+    position: absolute; /* Position absolute to not affect H1 centering */
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 0.5rem;
 }
 
 /* Mobile Menu Button */
@@ -80,6 +87,7 @@ body {
     font-size: 1.5rem;
     line-height: 1;
     cursor: pointer;
+    touch-action: manipulation;
     box-shadow: 0 2px 5px rgba(0,0,0,0.3);
     width: 50px;
     height: 50px;
@@ -100,6 +108,7 @@ body {
     z-index: 200; /* Behind sidebar */
     opacity: 0;
     transition: opacity 0.3s ease-in-out;
+    cursor: pointer;
 }
 
 .sidebar-overlay.show {
