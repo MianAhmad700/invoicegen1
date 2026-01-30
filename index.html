@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Invoice Generator</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="app-container">
+        <aside class="sidebar">
+            <h1>RiphahEvents</h1>
+            <nav>
+                <button class="nav-btn active" data-target="dashboard">Dashboard</button>
+                <button class="nav-btn" data-target="students">Students</button>
+                <button class="nav-btn" data-target="events">Events</button>
+                <button class="nav-btn" data-target="registrations">Registrations</button>
+                <button class="nav-btn" data-target="invoices">Invoices</button>
+            </nav>
+        </aside>
+        
+        <main class="main-content">
+            <!-- Dashboard Section -->
+            <section id="dashboard" class="section active">
+                <h2>Dashboard</h2>
+                <div class="stats-container">
+                    <div class="stat-card">
+                        <h3>Total Students</h3>
+                        <p id="total-students">0</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Active Events</h3>
+                        <p id="active-events">0</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Total Revenue</h3>
+                        <p id="total-revenue">$0</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Students Section -->
+            <section id="students" class="section">
+                <h2>Student Management</h2>
+                <div class="card">
+                    <h3>Add New Student</h3>
+                    <form id="add-student-form">
+                        <div class="form-group">
+                            <label for="student-name">Full Name</label>
+                            <input type="text" id="student-name" required>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="student-class">Class</label>
+                                <input type="text" id="student-class" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="student-section">Section</label>
+                                <input type="text" id="student-section" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="student-roll">Roll No</label>
+                                <input type="text" id="student-roll" required>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn-primary">Add Student</button>
+                    </form>
+                </div>
+                <div class="card">
+                    <h3>Student List</h3>
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Class</th>
+                                <th>Section</th>
+                                <th>Roll No</th>
+                            </tr>
+                        </thead>
+                        <tbody id="students-table-body">
+                            <!-- Students will be loaded here -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Events Section -->
+            <section id="events" class="section">
+                <h2>Event Management</h2>
+                <div class="card">
+                    <h3>Create New Event</h3>
+                    <form id="add-event-form">
+                        <div class="form-group">
+                            <label for="event-name">Event Name</label>
+                            <input type="text" id="event-name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="event-date">Event Date</label>
+                            <input type="date" id="event-date" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="event-desc">Description</label>
+                            <textarea id="event-desc"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>
+                                <input type="checkbox" id="event-active" checked> Is Active?
+                            </label>
+                        </div>
+                        <button type="submit" class="btn-primary">Create Event</button>
+                    </form>
+                </div>
+
+                <div class="card">
+                    <h3>Manage Segments</h3>
+                    <div class="form-group">
+                        <label for="segment-event-select">Select Event</label>
+                        <select id="segment-event-select">
+                            <option value="">Select an event...</option>
+                        </select>
+                    </div>
+                    
+                    <div id="segment-manager" class="hidden">
+                        <h4>Add Segment</h4>
+                        <form id="add-segment-form">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="segment-name">Segment Name</label>
+                                    <input type="text" id="segment-name" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="segment-fee">Fee ($)</label>
+                                    <input type="number" id="segment-fee" min="0" step="0.01" required>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn-secondary">Add Segment</button>
+                        </form>
+
+                        <h4>Existing Segments</h4>
+                        <ul id="segments-list" class="list-group">
+                            <!-- Segments will be listed here -->
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Registrations Section -->
+            <section id="registrations" class="section">
+                <h2>Event Registration</h2>
+                <div class="card">
+                    <form id="registration-form">
+                        <div class="form-group">
+                            <label for="reg-student-select">Select Student</label>
+                            <select id="reg-student-select" required>
+                                <option value="">Select a student...</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="reg-event-select">Select Event</label>
+                            <select id="reg-event-select" required>
+                                <option value="">Select an event...</option>
+                            </select>
+                        </div>
+
+                        <div id="reg-segments-container" class="hidden">
+                            <h4>Select Segments</h4>
+                            <div id="reg-segments-list">
+                                <!-- Checkboxes will be injected here -->
+                            </div>
+                            <div class="total-amount-display">
+                                Total Amount: $<span id="reg-total-amount">0.00</span>
+                            </div>
+                            <button type="submit" class="btn-primary">Register & Generate Invoice</button>
+                        </div>
+                    </form>
+                </div>
+            </section>
+
+            <!-- Invoices Section -->
+            <section id="invoices" class="section">
+                <h2>Invoices</h2>
+                <div class="card">
+                    <h3>Recent Registrations</h3>
+                    <div class="table-responsive">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Invoice #</th>
+                                    <th>Student</th>
+                                    <th>Event</th>
+                                    <th>Amount</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="invoices-table-body">
+                                <!-- Invoices list -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Invoice Print View (Hidden by default, shown when printing) -->
+            <div id="invoice-print-view" class="hidden">
+                <div class="invoice-container">
+                    <div class="invoice-header">
+                        <h1>RIPHAH EVENTS</h1>
+                        <div class="invoice-meta">
+                            <p><strong>Invoice No:</strong> <span id="print-invoice-no"></span></p>
+                            <p><strong>Date:</strong> <span id="print-date"></span></p>
+                            <p><strong>Status:</strong> <span id="print-status"></span></p>
+                        </div>
+                    </div>
+                    
+                    <div class="invoice-details">
+                        <div class="bill-to">
+                            <h3>Bill To:</h3>
+                            <p id="print-student-name"></p>
+                            <p id="print-student-details"></p>
+                        </div>
+                        <div class="event-details">
+                            <h3>Event Details:</h3>
+                            <p id="print-event-name"></p>
+                            <p id="print-event-date"></p>
+                        </div>
+                    </div>
+
+                    <table class="invoice-items">
+                        <thead>
+                            <tr>
+                                <th>Description</th>
+                                <th class="text-right">Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody id="print-items-body">
+                            <!-- Items -->
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th>Total</th>
+                                <th class="text-right" id="print-total"></th>
+                            </tr>
+                        </tfoot>
+                    </table>
+
+                    <div class="invoice-footer">
+                        <p>Thank you for your participation!</p>
+                        <button id="btn-print-action" class="no-print btn-primary">Print Now</button>
+                        <button id="btn-close-invoice" class="no-print btn-secondary">Close</button>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- Scripts -->
+    <script type="module" src="js/firebase-config.js"></script>
+    <script type="module" src="js/students.js"></script>
+    <script type="module" src="js/events.js"></script>
+    <script type="module" src="js/registrations.js"></script>
+    <script type="module" src="js/invoice.js"></script>
+    <script type="module" src="js/app.js"></script>
+</body>
+</html>
